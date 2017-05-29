@@ -9,6 +9,7 @@
   <title>基于ssm开发的秒杀业务 | Tang-Cong个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="秒杀业务 前言：这是一个基于ssm的项目  需求1.原则     单个账号单个商品仅限购买一次（使用主键冲突来实现）  2.前台展示     PC端：按单品区分     倒计时：结束时间和即将开始时间  3.后台设置内容     开始时间、结束时间（PC端按单品设置、移动端按时间段设置）     商品库存数量设置  4.功能逻辑     库存锁定（拖取商品后，原商品库存减少）     库存返还（活">
+<meta name="keywords" content="-a -b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于ssm开发的秒杀业务">
 <meta property="og:url" content="http://tcjava.cn/2017/05/25/基于ssm开发的秒杀业务/index.html">
@@ -18,7 +19,7 @@
 <meta property="og:image" content="http://i.imgur.com/v1gLQ7f.gif">
 <meta property="og:image" content="http://i.imgur.com/ihgU9Ql.gif">
 <meta property="og:image" content="http://i.imgur.com/HG0Xaj8.gif">
-<meta property="og:updated_time" content="2017-05-29T02:36:41.317Z">
+<meta property="og:updated_time" content="2017-05-29T03:19:27.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于ssm开发的秒杀业务">
 <meta name="twitter:description" content="秒杀业务 前言：这是一个基于ssm的项目  需求1.原则     单个账号单个商品仅限购买一次（使用主键冲突来实现）  2.前台展示     PC端：按单品区分     倒计时：结束时间和即将开始时间  3.后台设置内容     开始时间、结束时间（PC端按单品设置、移动端按时间段设置）     商品库存数量设置  4.功能逻辑     库存锁定（拖取商品后，原商品库存减少）     库存返还（活">
@@ -197,7 +198,8 @@
     使用redis缓存数据优化,超时的基础上一致性维护
     调整数据库操作语句顺序
     事务SQL在数据库中执行（存储过程），因为本地执行sql速度很快，减少GC的影响
-</code></pre><h3 id="使用工具："><a href="#使用工具：" class="headerlink" title="使用工具："></a>使用工具：</h3><pre><code>maven（构建项目），git(版本控制工具)，myeclipse(集成开发环境），junit(测试)
+</code></pre><a id="more"></a>
+<h3 id="使用工具："><a href="#使用工具：" class="headerlink" title="使用工具："></a>使用工具：</h3><pre><code>maven（构建项目），git(版本控制工具)，myeclipse(集成开发环境），junit(测试)
 </code></pre><h3 id="技术栈："><a href="#技术栈：" class="headerlink" title="技术栈："></a>技术栈：</h3><pre><code>spring,springmvc,mybatis(框架)，mysql(数据库)
 redis(缓存)，bootstrap(页面),html,css,javascript,jquery（前端）
 </code></pre><h3 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h3><pre><code>CREATE TABLE `seckill` (
@@ -366,6 +368,17 @@ public static SeckillStatEnum stateOf(int index) {
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">-a -b</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -541,6 +554,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">struts2 spring hibernate java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">-a -b</a>
               </li>
             
             <div class="clearfix"></div>

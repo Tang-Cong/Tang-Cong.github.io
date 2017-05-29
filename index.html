@@ -190,147 +190,10 @@
     使用redis缓存数据优化,超时的基础上一致性维护
     调整数据库操作语句顺序
     事务SQL在数据库中执行（存储过程），因为本地执行sql速度很快，减少GC的影响
-</code></pre><h3 id="使用工具："><a href="#使用工具：" class="headerlink" title="使用工具："></a>使用工具：</h3><pre><code>maven（构建项目），git(版本控制工具)，myeclipse(集成开发环境），junit(测试)
-</code></pre><h3 id="技术栈："><a href="#技术栈：" class="headerlink" title="技术栈："></a>技术栈：</h3><pre><code>spring,springmvc,mybatis(框架)，mysql(数据库)
-redis(缓存)，bootstrap(页面),html,css,javascript,jquery（前端）
-</code></pre><h3 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h3><pre><code>CREATE TABLE `seckill` (
-  `seckill_id` bigint(20) NOT NULL auto_increment COMMENT &apos;商品库存id&apos;,
-  `name` varchar(120) NOT NULL COMMENT &apos;商品名称&apos;,
-  `number` int(11) NOT NULL COMMENT &apos;库存数量&apos;,
-  `create_time` timestamp NOT NULL default CURRENT_TIMESTAMP COMMENT &apos;创建时间&apos;,
-  `start_time` timestamp NOT NULL default &apos;0000-00-00 00:00:00&apos; COMMENT &apos;秒杀开启时间&apos;,
-  `end_time` timestamp NOT NULL default &apos;0000-00-00 00:00:00&apos; COMMENT &apos;秒杀结束时间&apos;,
-  PRIMARY KEY  (`seckill_id`),
-  KEY `idx_start_time` (`start_time`),
-  KEY `idx_end_time` (`end_time`),
-  KEY `idx_create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT=&apos;秒杀库存表&apos;;
-
-CREATE TABLE `success_killed` (
-  `seckill_id` bigint(20) NOT NULL COMMENT &apos;秒杀商品id&apos;,
-  `user_phone` bigint(20) NOT NULL COMMENT &apos;用户手机号&apos;,
-  `state` tinyint(4) NOT NULL default &apos;-1&apos; COMMENT &apos;状态标示:-1:无效 0:成功 1:已付款 2:已发货&apos;,
-  `create_time` timestamp NOT NULL default CURRENT_TIMESTAMP COMMENT &apos;创建时间&apos;,
-  PRIMARY KEY  (`seckill_id`,`user_phone`),
-  KEY `idx_create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT=&apos;秒杀成功明细表&apos;;
-</code></pre><p>建议养成手写sql语句的习惯，<strong>sql文件在 src/main/sql 中</strong></p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><blockquote>
-<p>localhost:8080/seckill/list  显示秒杀商品列表</p>
-<p>localhost:8080/{seckillId}/detail 显示商品详细</p>
-</blockquote>
-<h3 id="秒杀的业务逻辑"><a href="#秒杀的业务逻辑" class="headerlink" title="秒杀的业务逻辑"></a>秒杀的业务逻辑</h3><h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><pre><code>    public SeckillExecution executeSeckill(long seckillId, long userPhone,
-        String md5) throws SeckillException, RepeatKillException,
-        SeckillCloseException {
-    if (md5 == null || !md5.equals(getMD5(seckillId))) {
-        throw new SeckillException(&quot;seckill data rewrite&quot;);
-    }
-    // 执行秒杀逻辑：减库存 + 记录购买行为
-    Date nowTime = new Date();
-
-    try {
-
-        // 记录购买行为
-        int insertCount = successKilledDao.insertSuccessKilled(seckillId,
-                userPhone);
-        // 唯一：seckillId, userPhone
-        if (insertCount &lt;= 0) {
-            // 重复秒杀
-            throw new RepeatKillException(&quot;seckill repeated&quot;);
-        } else {
-            // 减库存，热点商品竞争
-            int updateCount = seckillDao.reduceNumber(seckillId, nowTime);
-            if (updateCount &lt;= 0) {
-                // 没有更新到记录,秒杀结束
-                throw new SeckillCloseException(&quot;seckill is closed&quot;);
-            } else {
-                // 秒杀成功
-                SuccessKilled successKilled = successKilledDao
-                        .queryByIdWithSeckill(seckillId, userPhone);
-                return new SeckillExecution(seckillId,
-                        SeckillStatEnum.SUCCESS, successKilled);
-            }
-
-        }
-
-    } catch (SeckillCloseException e1) {
-        throw e1;
-    } catch (RepeatKillException e2) {
-        throw e2;
-    } catch (Exception e) {
-        logger.error(e.getMessage(), e);
-        // 所有编译期异常转化为运行期异常
-        throw new SeckillException(&quot;seckill inner error:&quot; + e.getMessage());
-    }
-}
-</code></pre><h3 id="使用枚举表述常量数据字典"><a href="#使用枚举表述常量数据字典" class="headerlink" title="使用枚举表述常量数据字典"></a>使用枚举表述常量数据字典</h3><h2 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h2><pre><code> public enum SeckillStatEnum {
-    SUCCESS(1, &quot;秒杀成功&quot;), END(0, &quot;秒杀结束&quot;), REPEAT_KILL(-1, &quot;重复秒杀&quot;), INNER_ERROR(
-        -2, &quot;系统异常&quot;), DATA_REWRITE(-3, &quot;数据篡改&quot;);
-
-private int state;
-
-private String stateInfo;
-
-SeckillStatEnum(int state, String stateInfo) {
-    this.state = state;
-    this.stateInfo = stateInfo;
-}
-
-public int getState() {
-    return state;
-}
-
-public String getStateInfo() {
-    return stateInfo;
-}
-
-public static SeckillStatEnum stateOf(int index) {
-    for (SeckillStatEnum state : values()) {
-        if (state.getState() == index) {
-            return state;
-        }
-    }
-    return null;
-}
-
-}
-</code></pre><h3 id="自定义秒杀异常"><a href="#自定义秒杀异常" class="headerlink" title="自定义秒杀异常"></a>自定义秒杀异常</h3><p> 秒杀相关业务异常 三个方面：方法粒度，参数，返回类型(return 类型/异常)</p>
-<blockquote>
-<ul>
-<li><p>RepeatKillException 重复秒杀异常 </p>
-</li>
-<li><p>SeckillCloseException 秒杀关闭异常</p>
-</li>
-<li><p>SeckillException 秒杀异常</p>
-</li>
-</ul>
-</blockquote>
-<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>使用注解控制事务方法的优点</p>
-<blockquote>
-<ul>
-<li><p>1.开发团队达成一致约定，明确标注事务方法的编程风格</p>
-</li>
-<li><p>2.保证事务方法的执行时间尽可能短，不要穿插其他网络风格操作RPC/HTTP 请求或者剥离到事务方法外部</p>
-</li>
-<li><p>3.不是所有的方法都需要事务，如只有一条修改，只读操作不需要事务控制</p>
-</li>
-</ul>
-</blockquote>
-<h3 id="页面倒计时"><a href="#页面倒计时" class="headerlink" title="页面倒计时"></a>页面倒计时</h3><p>使用countdown 插件</p>
-<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><blockquote>
-<ul>
-<li><p>当未开启秒杀时，用户访问不了秒杀的地址</p>
-</li>
-<li><p>当开启秒杀时，才会暴露秒杀地址，秒杀地址结果MD5加密，同时使用盐值混淆，如果用户用第三方插件或手动修改数据，会抛出异常，阻止用户</p>
-</li>
-</ul>
-</blockquote>
-<p><strong>项目源码</strong>：<a href="https://github.com/Tang-Cong/seckill" target="_blank" rel="external">https://github.com/Tang-Cong/seckill</a></p>
-<p><strong>预览</strong>：<br><img src="http://i.imgur.com/WCc71cg.gif" alt=""></p>
-<p><img src="http://i.imgur.com/v1gLQ7f.gif" alt=""></p>
-<p><img src="http://i.imgur.com/ihgU9Ql.gif" alt=""></p>
-<p><img src="http://i.imgur.com/HG0Xaj8.gif" alt=""></p>
-
+</code></pre>
+        
+          <a class="article-more-a" href="/2017/05/25/基于ssm开发的秒杀业务/#more">more >></a>
+        
       
 
       
@@ -338,6 +201,17 @@ public static SeckillStatEnum stateOf(int index) {
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">-a -b</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -498,6 +372,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">struts2 spring hibernate java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">-a -b</a>
               </li>
             
             <div class="clearfix"></div>
