@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://tcjava.cn">
-  <title>Tag: java | Tang-Cong个人博客</title>
+  <title>面试题之mysql | Tang-Cong个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="大三，Java后端爱好者，求实习ing">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tang-Cong个人博客">
-<meta property="og:url" content="http://tcjava.cn/tags/java/index.html">
+  <meta name="description" content="将面试题里的mysql知识整理出来1.MySQL的索引类型：mysql的索引有5种：主键索引、普通索引、唯一索引、全文索引、聚合索引（多列索引）。  唯一索引和全文索引用的很少，我们主要关注主键索引、普通索引和聚合索引。  1）主键索引：主键索引是加在主键上的索引，设置主键（primary key）的时候，mysql会自动创建主键索引；  2）普通索引：创建在非主键列上的索引；  3）聚合索引：创">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题之mysql">
+<meta property="og:url" content="http://tcjava.cn/2017/06/01/面试题之mysql/index.html">
 <meta property="og:site_name" content="Tang-Cong个人博客">
-<meta property="og:description" content="大三，Java后端爱好者，求实习ing">
+<meta property="og:description" content="将面试题里的mysql知识整理出来1.MySQL的索引类型：mysql的索引有5种：主键索引、普通索引、唯一索引、全文索引、聚合索引（多列索引）。  唯一索引和全文索引用的很少，我们主要关注主键索引、普通索引和聚合索引。  1）主键索引：主键索引是加在主键上的索引，设置主键（primary key）的时候，mysql会自动创建主键索引；  2）普通索引：创建在非主键列上的索引；  3）聚合索引：创">
+<meta property="og:image" content="http://i.imgur.com/Le2kjf8.png">
+<meta property="og:updated_time" content="2017-06-01T12:32:55.568Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tang-Cong个人博客">
-<meta name="twitter:description" content="大三，Java后端爱好者，求实习ing">
+<meta name="twitter:title" content="面试题之mysql">
+<meta name="twitter:description" content="将面试题里的mysql知识整理出来1.MySQL的索引类型：mysql的索引有5种：主键索引、普通索引、唯一索引、全文索引、聚合索引（多列索引）。  唯一索引和全文索引用的很少，我们主要关注主键索引、普通索引和聚合索引。  1）主键索引：主键索引是加在主键上的索引，设置主键（primary key）的时候，mysql会自动创建主键索引；  2）普通索引：创建在非主键列上的索引；  3）聚合索引：创">
+<meta name="twitter:image" content="http://i.imgur.com/Le2kjf8.png">
   
     <link rel="alternative" href="/atom.xml" title="Tang-Cong个人博客" type="application/atom+xml">
   
@@ -146,172 +150,200 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-面试题之mysql" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      面试题之mysql
+    </h1>
+  
+
+        
+        <a href="/2017/06/01/面试题之mysql/" class="archive-article-date">
+  	<time datetime="2017-06-01T12:28:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-01</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="将面试题里的mysql知识整理出来"><a href="#将面试题里的mysql知识整理出来" class="headerlink" title="将面试题里的mysql知识整理出来"></a>将面试题里的mysql知识整理出来</h2><h1 id="1-MySQL的索引类型："><a href="#1-MySQL的索引类型：" class="headerlink" title="1.MySQL的索引类型："></a>1.MySQL的索引类型：</h1><pre><code>mysql的索引有5种：主键索引、普通索引、唯一索引、全文索引、聚合索引（多列索引）。
+
+唯一索引和全文索引用的很少，我们主要关注主键索引、普通索引和聚合索引。
+
+1）主键索引：主键索引是加在主键上的索引，设置主键（primary key）的时候，mysql会自动创建主键索引；
+
+2）普通索引：创建在非主键列上的索引；
+
+3）聚合索引：创建在多列上的索引。
+</code></pre><a id="more"></a>
+<h1 id="2-索引的语法："><a href="#2-索引的语法：" class="headerlink" title="2.索引的语法："></a>2.索引的语法：</h1><pre><code>查看某张表的索引：show index from 表名；
+
+创建普通索引：alter table 表名 add index  索引名 (加索引的列) 
+
+创建聚合索引：alter table 表名 add index  索引名 (加索引的列1,加索引的列2) 
+
+删除某张表的索引：drop index 索引名 on 表名;
+</code></pre><h1 id="3-mysql有几种存储引擎"><a href="#3-mysql有几种存储引擎" class="headerlink" title="3.mysql有几种存储引擎"></a>3.mysql有几种存储引擎</h1><pre><code>三种吗，分别是InnoDB，MyISAM，MEMORY。
+</code></pre><h1 id="4-InnoDB存储引擎"><a href="#4-InnoDB存储引擎" class="headerlink" title="4.InnoDB存储引擎"></a>4.InnoDB存储引擎</h1><pre><code>InnoDB给MySQL的表提供了事务处理、回滚、崩溃修复能力和多版本并发控制的事务安全。在MySQL从3.23.34a开始包含InnnoDB。它是MySQL上第一个提供外键约束的表引擎。而且InnoDB对事务处理的能力，也是其他存储引擎不能比拟的。靠后版本的MySQL的默认存储引擎就是InnoDB。
+
+InnoDB存储引擎总支持AUTO_INCREMENT。自动增长列的值不能为空，并且值必须唯一。MySQL中规定自增列必须为主键。在插入值的时候，如果自动增长列不输入值，则插入的值为自动增长后的值；如果输入的值为0或空（NULL），则插入的值也是自动增长后的值；如果插入某个确定的值，且该值在前面没有出现过，就可以直接插入。
+
+InnoDB还支持外键（FOREIGN KEY）。外键所在的表叫做子表，外键所依赖（REFERENCES）的表叫做父表。父表中被字表外键关联的字段必须为主键。当删除、更新父表中的某条信息时，子表也必须有相应的改变，这是数据库的参照完整性规则。
+
+InnoDB中，创建的表的表结构存储在.frm文件中（我觉得是frame的缩写吧）。数据和索引存储在innodb_data_home_dir和innodb_data_file_path定义的表空间中。 
+
+InnoDB的优势在于提供了良好的事务处理、崩溃修复能力和并发控制。缺点是读写效率较差，占用的数据空间相对较大。
+</code></pre><h1 id="5-MyISAM存储引擎"><a href="#5-MyISAM存储引擎" class="headerlink" title="5.MyISAM存储引擎"></a>5.MyISAM存储引擎</h1><pre><code>MyISAM是MySQL中常见的存储引擎，曾经是MySQL的默认存储引擎。MyISAM是基于ISAM引擎发展起来的，增加了许多有用的扩展。
+
+MyISAM的表存储成3个文件。文件的名字与表名相同。拓展名为frm、MYD、MYI。其实，frm文件存储表的结构；MYD文件存储数据，是MYData的缩写；MYI文件存储索引，是MYIndex的缩写。
+
+基于MyISAM存储引擎的表支持3种不同的存储格式。包括静态型、动态型和压缩型。其中，静态型是MyISAM的默认存储格式，它的字段是固定长度的；动态型包含变长字段，记录的长度不是固定的；压缩型需要用到myisampack工具，占用的磁盘空间较小。
+
+MyISAM的优势在于占用空间小，处理速度快。缺点是不支持事务的完整性和并发性。
+</code></pre><h1 id="6-MEMORY存储引擎"><a href="#6-MEMORY存储引擎" class="headerlink" title="6.MEMORY存储引擎"></a>6.MEMORY存储引擎</h1><pre><code>MEMORY是MySQL中一类特殊的存储引擎。它使用存储在内存中的内容来创建表，而且数据全部放在内存中。这些特性与前面的两个很不同。
+
+每个基于MEMORY存储引擎的表实际对应一个磁盘文件。该文件的文件名与表名相同，类型为frm类型。该文件中只存储表的结构。而其数据文件，都是存储在内存中，这样有利于数据的快速处理，提高整个表的效率。值得注意的是，服务器需要有足够的内存来维持MEMORY存储引擎的表的使用。如果不需要了，可以释放内存，甚至删除不需要的表。
+
+MEMORY默认使用哈希索引。速度比使用B型树索引快。当然如果你想用B型树索引，可以在创建索引时指定。
+
+注意，MEMORY用到的很少，因为它是把数据存到内存中，如果内存出现异常就会影响数据。如果重启或者关机，所有数据都会消失。因此，基于MEMORY的表的生命周期很短，一般是一次性的。
+</code></pre><h1 id="7-怎样选择存储引擎"><a href="#7-怎样选择存储引擎" class="headerlink" title="7.怎样选择存储引擎"></a>7.怎样选择存储引擎</h1><pre><code>在实际工作中，选择一个合适的存储引擎是一个比较复杂的问题。每种存储引擎都有自己的优缺点，不能笼统地说谁比谁好。
+
+InnoDB：支持事务处理，支持外键，支持崩溃修复能力和并发控制。如果需要对事务的完整性要求比较高（比如银行），要求实现并发控制（比如售票），那选择InnoDB有很大的优势。如果需要频繁的更新、删除操作的数据库，也可以选择InnoDB，因为支持事务的提交（commit）和回滚（rollback）。 
+
+MyISAM：插入数据快，空间和内存使用比较低。如果表主要是用于插入新记录和读出记录，那么选择MyISAM能实现处理高效率。如果应用的完整性、并发性要求比 较低，也可以使用。
+
+MEMORY：所有的数据都在内存中，数据的处理速度快，但是安全性不高。如果需要很快的读写速度，对数据的安全性要求较低，可以选择MEMOEY。它对表的大小有要求，不能建立太大的表。所以，这类数据库只使用在相对较小的数据库表。
+
+注意，同一个数据库也可以使用多种存储引擎的表。如果一个表要求比较高的事务处理，可以选择InnoDB。这个数据库中可以将查询要求比较高的表选择MyISAM存储。如果该数据库需要一个用于查询的临时表，可以选择MEMORY存储引擎。
+</code></pre><p><img src="http://i.imgur.com/Le2kjf8.png" alt=""></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/30/分布式开发的电商项目/" class="archive-article-date">
-  	<time datetime="2017-05-30T07:38:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/30/分布式开发的电商项目/">分布式开发的电商项目</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">spring mvc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://tcjava.cn/2017/06/01/面试题之mysql/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/25/基于ssm开发的秒杀业务/" class="archive-article-date">
-  	<time datetime="2017-05-25T04:41:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-25</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/25/基于ssm开发的秒杀业务/">基于ssm开发的秒杀业务</a>
-    </h1>
+  
+    <a href="/2017/05/30/分布式开发的电商项目/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式开发的电商项目</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">springmvc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/23/基于ssh2开发的房屋租赁系统/" class="archive-article-date">
-  	<time datetime="2017-05-23T04:33:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/23/基于ssh2开发的房屋租赁系统/">基于ssh2开发的房屋租赁系统</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">struts2</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hibernate</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -334,9 +366,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",
