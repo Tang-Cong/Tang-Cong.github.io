@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Tang-Cong个人博客">
 <meta property="og:description" content="将面试题里的mysql知识整理出来1.MySQL的索引类型：mysql的索引有5种：主键索引、普通索引、唯一索引、全文索引、聚合索引（多列索引）。  唯一索引和全文索引用的很少，我们主要关注主键索引、普通索引和聚合索引。  1）主键索引：主键索引是加在主键上的索引，设置主键（primary key）的时候，mysql会自动创建主键索引；  2）普通索引：创建在非主键列上的索引；  3）聚合索引：创">
 <meta property="og:image" content="http://i.imgur.com/Le2kjf8.png">
-<meta property="og:updated_time" content="2017-06-01T12:32:55.568Z">
+<meta property="og:updated_time" content="2017-06-02T08:51:41.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试题之mysql">
 <meta name="twitter:description" content="将面试题里的mysql知识整理出来1.MySQL的索引类型：mysql的索引有5种：主键索引、普通索引、唯一索引、全文索引、聚合索引（多列索引）。  唯一索引和全文索引用的很少，我们主要关注主键索引、普通索引和聚合索引。  1）主键索引：主键索引是加在主键上的索引，设置主键（primary key）的时候，mysql会自动创建主键索引；  2）普通索引：创建在非主键列上的索引；  3）聚合索引：创">
@@ -221,7 +221,16 @@ MEMORY：所有的数据都在内存中，数据的处理速度快，但是安�
 
 注意，同一个数据库也可以使用多种存储引擎的表。如果一个表要求比较高的事务处理，可以选择InnoDB。这个数据库中可以将查询要求比较高的表选择MyISAM存储。如果该数据库需要一个用于查询的临时表，可以选择MEMORY存储引擎。
 </code></pre><p><img src="http://i.imgur.com/Le2kjf8.png" alt=""></p>
-
+<h1 id="8-ACID"><a href="#8-ACID" class="headerlink" title="8.ACID"></a>8.ACID</h1><pre><code>事务所具有的四个特性：原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation，又称独立性）、持久性（Durability）。
+1.原子性
+整个事务中的所有操作，要么全部完成，要么全部不完成，不可能停滞在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。
+2.一致性
+在事务开始之前和事务结束以后，数据库的完整性约束没有被破坏。
+3.隔离性
+两个事务的执行是互不干扰的，一个事务不可能看到其他事务运行时，中间某一时刻的数据。
+4.持久性
+在事务完成以后，该事务所对数据库所作的更改便持久的保存在数据库之中，并不会被回滚。
+</code></pre>
       
 
       
